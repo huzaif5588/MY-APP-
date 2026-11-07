@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B192C" />
+      <stop offset="50%" stop-color="#1E3E62" />
+      <stop offset="100%" stop-color="#001F3F" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082" />
+      <stop offset="40%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+    <linearGradient id="innerShield" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1E3E62" />
+      <stop offset="100%" stop-color="#0B192C" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000000" flood-opacity="0.45" />
+    </filter>
+  </defs>
+
+  <!-- Background Circle Glow -->
+  <circle cx="250" cy="250" r="236" fill="#0B192C" />
+  <circle cx="250" cy="250" r="230" fill="none" stroke="url(#goldGrad)" stroke-width="4" stroke-dasharray="8 4" opacity="0.6" />
+
+  <!-- Laurel Wreath Leaves (Left) -->
+  <g fill="url(#goldGrad)" opacity="0.9">
+    <path d="M110 320 C100 290 98 250 108 210 C104 225 106 245 114 260 C110 240 114 215 125 195 C122 210 126 230 134 240 C130 220 136 195 150 178 C145 195 150 215 160 225 C158 200 168 180 185 165 C180 182 185 200 195 210 C185 235 170 270 145 300 C132 315 120 325 110 320 Z" />
+    <!-- Laurel Wreath Leaves (Right - Mirrored) -->
+    <path d="M390 320 C400 290 402 250 392 210 C396 225 394 245 386 260 C390 240 386 215 375 195 C378 210 374 230 366 240 C370 220 364 195 350 178 C355 195 350 215 340 225 C342 200 332 180 315 165 C320 182 315 200 305 210 C315 235 330 270 355 300 C368 315 380 325 390 320 Z" />
+  </g>
+
+  <!-- Outer Academic Shield -->
+  <path d="M140 120 L360 120 C360 120 370 240 360 290 C345 360 250 410 250 410 C250 410 155 360 140 290 C130 240 140 120 140 120 Z" 
+        fill="url(#shieldGrad)" 
+        stroke="url(#goldGrad)" 
+        stroke-width="8" 
+        filter="url(#shadow)" />
+
+  <!-- Inner Shield Trim -->
+  <path d="M156 136 L344 136 C344 136 352 236 344 278 C332 336 250 385 250 385 C250 385 168 336 156 278 C148 236 156 136 156 136 Z" 
+        fill="url(#innerShield)" 
+        stroke="url(#goldGrad)" 
+        stroke-width="2" 
+        opacity="0.8" />
+
+  <!-- Golden 5-Pointed Star -->
+  <polygon points="250,150 256,168 275,168 260,179 265,197 250,186 235,197 240,179 225,168 244,168" fill="url(#goldGrad)" />
+  <circle cx="218" cy="175" r="3.5" fill="url(#goldGrad)" opacity="0.8" />
+  <circle cx="282" cy="175" r="3.5" fill="url(#goldGrad)" opacity="0.8" />
+
+  <!-- Graduation Cap -->
+  <g transform="translate(250, 222) scale(0.95)">
+    <!-- Cap Rhombus -->
+    <polygon points="0,-24 48,-4 0,16 -48,-4" fill="url(#goldGrad)" stroke="#AA7C11" stroke-width="1.5" />
+    <polygon points="0,-20 42,-4 0,12 -42,-4" fill="#0B192C" />
+    <!-- Skull Cap Underneath -->
+    <path d="M-24 2 C-24 16 24 16 24 2 Z" fill="url(#goldGrad)" />
+    <!-- Tassel Button & Cord -->
+    <circle cx="0" cy="-4" r="3" fill="url(#goldGrad)" />
+    <path d="M0 -4 Q28 -2 34 16 L37 26" fill="none" stroke="url(#goldGrad)" stroke-width="2" />
+    <!-- Tassel Fringe -->
+    <polygon points="34,26 40,26 38,34 33,34" fill="url(#goldGrad)" />
+  </g>
+
+  <!-- Open Educational Book -->
+  <g transform="translate(250, 290)">
+    <!-- Book Spine Glow -->
+    <path d="M0 24 L0 -4" stroke="url(#goldGrad)" stroke-width="3" />
+    <!-- Left Page -->
+    <path d="M-4 -4 C-25 -10 -55 -6 -72 6 L-72 32 C-55 20 -25 16 -4 22 Z" fill="#FFFFFF" stroke="url(#goldGrad)" stroke-width="2.5" />
+    <!-- Left Page Lines -->
+    <line x1="-60" y1="8" x2="-16" y2="3" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" />
+    <line x1="-60" y1="16" x2="-16" y2="11" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" />
+    <line x1="-55" y1="24" x2="-20" y2="19" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" />
+    <!-- Right Page -->
+    <path d="M4 -4 C25 -10 55 -6 72 6 L72 32 C55 20 25 16 4 22 Z" fill="#FFFFFF" stroke="url(#goldGrad)" stroke-width="2.5" />
+    <!-- Right Page Lines -->
+    <line x1="16" y1="3" x2="60" y2="8" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" />
+    <line x1="16" y1="11" x2="60" y2="16" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" />
+    <line x1="20" y1="19" x2="55" y2="24" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" />
+    <!-- Ribbon Bookmark -->
+    <path d="M0 8 L-6 38 L0 34 L6 38 Z" fill="url(#goldGrad)" />
+  </g>
+
+  <!-- Golden Scroll Banner at Bottom -->
+  <g transform="translate(250, 412)">
+    <path d="M-150 0 C-100 -8 100 -8 150 0 C165 14 150 30 135 24 C100 20 -100 20 -135 24 C-150 30 -165 14 -150 0 Z" 
+          fill="url(#goldGrad)" 
+          stroke="#AA7C11" 
+          stroke-width="2" 
+          filter="url(#shadow)" />
+    <!-- Banner Ribbons Ends -->
+    <polygon points="-150,0 -165,10 -150,22 -158,11" fill="#AA7C11" />
+    <polygon points="150,0 165,10 150,22 158,11" fill="#AA7C11" />
+    <!-- Ribbon Text -->
+    <text x="0" y="14" font-family="'Outfit', 'Plus Jakarta Sans', sans-serif" font-size="13" font-weight="800" fill="#0B192C" text-anchor="middle" letter-spacing="2">KALABAGH • PAKISTAN</text>
+  </g>
+
+  <!-- Top Arch Text: INDUS ACADEMY -->
+  <path id="textArch" d="M 100 210 A 180 180 0 0 1 400 210" fill="none" />
+  <text fill="url(#goldGrad)" font-family="'Outfit', 'Plus Jakarta Sans', sans-serif" font-size="24" font-weight="800" letter-spacing="4" filter="url(#shadow)">
+    <textPath href="#textArch" startOffset="50%" text-anchor="middle">
+      INDUS ACADEMY
+    </textPath>
+  </text>
+
+  <!-- Tagline underneath banner -->
+  <text x="250" y="465" font-family="'Plus Jakarta Sans', sans-serif" font-size="11" font-weight="700" fill="#E2E8F0" text-anchor="middle" letter-spacing="3" opacity="0.95">
+    LEARN • GROW • SUCCEED
+  </text>
+</svg>

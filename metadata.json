@@ -1,0 +1,6 @@
+{
+  "name": "Indus Academy Kalabagh",
+  "description": "Premium Android Academy Management System for Indus Academy, Kalabagh. Complete management of admissions, fees, attendance, examinations, parent portal, bilingual English and Urdu support, and offline synchronization.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

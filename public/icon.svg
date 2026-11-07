@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B192C" />
+      <stop offset="50%" stop-color="#1E3E62" />
+      <stop offset="100%" stop-color="#001F3F" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFE082" />
+      <stop offset="40%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA7C11" />
+    </linearGradient>
+  </defs>
+  <circle cx="250" cy="250" r="240" fill="#0B192C" />
+  <circle cx="250" cy="250" r="230" fill="none" stroke="url(#goldGrad)" stroke-width="6" />
+  <path d="M140 120 L360 120 C360 120 370 240 360 290 C345 360 250 410 250 410 C250 410 155 360 140 290 C130 240 140 120 140 120 Z" fill="url(#shieldGrad)" stroke="url(#goldGrad)" stroke-width="8" />
+  <polygon points="250,150 256,168 275,168 260,179 265,197 250,186 235,197 240,179 225,168 244,168" fill="url(#goldGrad)" />
+  <g transform="translate(250, 222) scale(0.95)">
+    <polygon points="0,-24 48,-4 0,16 -48,-4" fill="url(#goldGrad)" />
+    <path d="M-24 2 C-24 16 24 16 24 2 Z" fill="url(#goldGrad)" />
+  </g>
+  <g transform="translate(250, 290)">
+    <path d="M-4 -4 C-25 -10 -55 -6 -72 6 L-72 32 C-55 20 -25 16 -4 22 Z" fill="#FFFFFF" stroke="url(#goldGrad)" stroke-width="2.5" />
+    <path d="M4 -4 C25 -10 55 -6 72 6 L72 32 C55 20 25 16 4 22 Z" fill="#FFFFFF" stroke="url(#goldGrad)" stroke-width="2.5" />
+  </g>
+</svg>

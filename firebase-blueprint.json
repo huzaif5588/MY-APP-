@@ -1,0 +1,257 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "System user account with role-based access",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "teacher", "accountant", "parent"] },
+        "portalType": { "type": "string", "enum": ["admin", "teacher", "accountant", "parent"] },
+        "status": { "type": "string", "enum": ["active", "suspended"] },
+        "phone": { "type": "string" },
+        "linkedStudentIds": { "type": "array" },
+        "assignedClassIds": { "type": "array" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "name", "role", "portalType", "status"]
+    },
+    "Student": {
+      "title": "Student",
+      "description": "Student profile and academic admission record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "regNo": { "type": "string" },
+        "admissionNo": { "type": "string" },
+        "name": { "type": "string" },
+        "nameUrdu": { "type": "string" },
+        "fatherName": { "type": "string" },
+        "guardianName": { "type": "string" },
+        "dob": { "type": "string" },
+        "gender": { "type": "string", "enum": ["male", "female"] },
+        "fatherPhone": { "type": "string" },
+        "whatsappNo": { "type": "string" },
+        "address": { "type": "string" },
+        "previousSchool": { "type": "string" },
+        "admissionDate": { "type": "string" },
+        "academicSession": { "type": "string" },
+        "classId": { "type": "string" },
+        "className": { "type": "string" },
+        "section": { "type": "string" },
+        "rollNo": { "type": "string" },
+        "monthlyTuitionFee": { "type": "number" },
+        "admissionFee": { "type": "number" },
+        "discount": { "type": "number" },
+        "emergencyContact": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "promoted", "transferred", "withdrawn"] },
+        "notes": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "regNo", "name", "fatherName", "className", "rollNo", "monthlyTuitionFee", "status"]
+    },
+    "Teacher": {
+      "title": "Teacher",
+      "description": "Faculty member profile and academic assignment",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "fullName": { "type": "string" },
+        "nameUrdu": { "type": "string" },
+        "fatherName": { "type": "string" },
+        "cnic": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "qualification": { "type": "string" },
+        "experience": { "type": "string" },
+        "joiningDate": { "type": "string" },
+        "assignedSubjects": { "type": "array" },
+        "assignedClasses": { "type": "array" },
+        "basicSalary": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "on_leave", "resigned"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "teacherId", "fullName", "phone", "basicSalary", "status"]
+    },
+    "StudentAttendance": {
+      "title": "StudentAttendance",
+      "description": "Daily student classroom attendance entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "studentId": { "type": "string" },
+        "classId": { "type": "string" },
+        "section": { "type": "string" },
+        "status": { "type": "string", "enum": ["present", "absent", "late", "leave"] },
+        "remarks": { "type": "string" },
+        "markedBy": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "date", "studentId", "classId", "status"]
+    },
+    "FeeVoucher": {
+      "title": "FeeVoucher",
+      "description": "Monthly fee voucher for student",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "voucherNo": { "type": "string" },
+        "studentId": { "type": "string" },
+        "month": { "type": "string" },
+        "tuitionFee": { "type": "number" },
+        "discount": { "type": "number" },
+        "totalPayable": { "type": "number" },
+        "paidAmount": { "type": "number" },
+        "balance": { "type": "number" },
+        "status": { "type": "string", "enum": ["paid", "partial", "unpaid", "overdue"] },
+        "dueDate": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "voucherNo", "studentId", "month", "totalPayable", "balance", "status"]
+    },
+    "FeePayment": {
+      "title": "FeePayment",
+      "description": "Recorded fee payment receipt",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "receiptNo": { "type": "string" },
+        "voucherId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "amountPaid": { "type": "number" },
+        "paymentDate": { "type": "string" },
+        "feeMonth": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "transactionRef": { "type": "string" },
+        "receivedBy": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "receiptNo", "studentId", "amountPaid", "paymentDate", "paymentMethod", "receivedBy"]
+    },
+    "ExamResult": {
+      "title": "ExamResult",
+      "description": "Published examination marks card",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "examId": { "type": "string" },
+        "studentId": { "type": "string" },
+        "classId": { "type": "string" },
+        "rollNo": { "type": "string" },
+        "marks": { "type": "array" },
+        "totalMax": { "type": "number" },
+        "totalObtained": { "type": "number" },
+        "percentage": { "type": "number" },
+        "grade": { "type": "string" },
+        "position": { "type": "number" },
+        "passed": { "type": "boolean" },
+        "remarks": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "examId", "studentId", "totalMax", "totalObtained", "percentage", "grade", "passed"]
+    },
+    "Homework": {
+      "title": "Homework",
+      "description": "Daily academic homework assignment",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "classId": { "type": "string" },
+        "section": { "type": "string" },
+        "subject": { "type": "string" },
+        "teacherId": { "type": "string" },
+        "teacherName": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "assignedDate": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "classId", "subject", "title", "description", "dueDate"]
+    },
+    "Announcement": {
+      "title": "Announcement",
+      "description": "Official academy circular notice",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "titleUrdu": { "type": "string" },
+        "content": { "type": "string" },
+        "contentUrdu": { "type": "string" },
+        "category": { "type": "string" },
+        "targetRole": { "type": "string" },
+        "publishedDate": { "type": "string" },
+        "authorName": { "type": "string" },
+        "isPinned": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "title", "content", "category", "targetRole"]
+    },
+    "Expense": {
+      "title": "Expense",
+      "description": "Operational academy expense entry",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "date": { "type": "string" },
+        "category": { "type": "string" },
+        "amount": { "type": "number" },
+        "description": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "referenceId": { "type": "string" },
+        "recordedBy": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "date", "category", "amount", "description", "recordedBy"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles and RBAC portal assignments"
+    },
+    "/students/{studentId}": {
+      "schema": { "$ref": "#/entities/Student" },
+      "description": "Active and archived student admission profiles"
+    },
+    "/teachers/{teacherId}": {
+      "schema": { "$ref": "#/entities/Teacher" },
+      "description": "Faculty records, qualifications, and salaries"
+    },
+    "/student_attendance/{attendanceId}": {
+      "schema": { "$ref": "#/entities/StudentAttendance" },
+      "description": "Daily classroom student attendance sessions"
+    },
+    "/fee_vouchers/{voucherId}": {
+      "schema": { "$ref": "#/entities/FeeVoucher" },
+      "description": "Monthly fee vouchers and outstanding student balances"
+    },
+    "/fee_payments/{paymentId}": {
+      "schema": { "$ref": "#/entities/FeePayment" },
+      "description": "Official fee collection payment transactions"
+    },
+    "/results/{resultId}": {
+      "schema": { "$ref": "#/entities/ExamResult" },
+      "description": "Academic exam result sheets and report cards"
+    },
+    "/homework/{homeworkId}": {
+      "schema": { "$ref": "#/entities/Homework" },
+      "description": "Homework diary assignments and study tasks"
+    },
+    "/announcements/{announcementId}": {
+      "schema": { "$ref": "#/entities/Announcement" },
+      "description": "Academy announcements and official circulars"
+    },
+    "/expenses/{expenseId}": {
+      "schema": { "$ref": "#/entities/Expense" },
+      "description": "Accounts operational expenses and ledger"
+    }
+  }
+}

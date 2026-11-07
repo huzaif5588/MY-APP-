@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-urdu: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Urdu Typesetting', Tahoma, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --color-indus-navy: #0B192C;
+  --color-indus-deep: #1E3E62;
+  --color-indus-blue: #0056B3;
+  --color-indus-gold: #D4AF37;
+  --color-indus-gold-dark: #B8860B;
+}
+
+/* RTL Specific typography and layout helpers */
+[dir="rtl"] {
+  font-family: var(--font-urdu), var(--font-sans);
+  letter-spacing: 0;
+}
+
+[dir="rtl"] .font-display {
+  font-family: var(--font-urdu), var(--font-display);
+}
+
+/* Custom Scrollbar for sleek Android touch feel */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.6);
+}
+
+/* Safe Area Insets for mobile and Android notch */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 16px);
+}
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Print optimizations for official Academy documents */
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .print-break-inside-avoid {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .print-shadow-none {
+    box-shadow: none !important;
+    border-color: #cbd5e1 !important;
+  }
+  @page {
+    margin: 1cm;
+    size: A4 portrait;
+  }
+}

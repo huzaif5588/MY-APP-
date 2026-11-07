@@ -1,0 +1,195 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 0. Global Safety Net - Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 1. Hardened Helper Primitives
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function userDoc() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function hasUserDoc() {
+      return exists(/databases/$(database)/documents/users/$(request.auth.uid));
+    }
+
+    // Bootstrapped Admin check
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'ateequrrehman20521@gmail.com' ||
+        request.auth.token.email == 'admin@indusacademy.pk' ||
+        request.auth.token.email == 'principal@indusacademy.pk' ||
+        request.auth.token.email == 'director@indusacademy.pk' ||
+        (hasUserDoc() && (userDoc().role == 'super_admin' || userDoc().role == 'principal' || userDoc().role == 'admin'))
+      );
+    }
+
+    function isTeacher() {
+      return isSignedIn() && (
+        isAdmin() ||
+        (hasUserDoc() && userDoc().role == 'teacher')
+      );
+    }
+
+    function isAccountant() {
+      return isSignedIn() && (
+        isAdmin() ||
+        (hasUserDoc() && userDoc().role == 'accountant')
+      );
+    }
+
+    function isParent() {
+      return isSignedIn() && hasUserDoc() && userDoc().role == 'parent';
+    }
+
+    function isLinkedParent(studentId) {
+      return isParent() && 
+        ('linkedStudentIds' in userDoc()) && 
+        (studentId in userDoc().linkedStudentIds);
+    }
+
+    // 2. User Profiles & RBAC
+    match /users/{userId} {
+      allow get: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      allow list: if isAdmin();
+      // Allow registration or profile creation; cannot self-elevate to admin
+      allow create: if isSignedIn() && (request.auth.uid == userId || isAdmin());
+      // Prevent user from elevating their own role, teacherId, or linkedStudentIds
+      allow update: if isSignedIn() && (
+        isAdmin() ||
+        (request.auth.uid == userId && !incoming().diff(existing()).affectedKeys().hasAny(['role', 'isAdmin', 'teacherId', 'linkedStudentIds']))
+      );
+      allow delete: if isAdmin();
+    }
+
+    // 3. Students
+    match /students/{studentId} {
+      allow get: if isAdmin() || isTeacher() || isAccountant() || isLinkedParent(studentId);
+      allow list: if isAdmin() || isTeacher() || isAccountant() || (isParent() && isLinkedParent(resource.data.id));
+      allow create, update, delete: if isAdmin();
+    }
+
+    // 4. Teachers
+    match /teachers/{teacherId} {
+      allow get, list: if isSignedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // 5. Attendance
+    match /student_attendance/{attId} {
+      allow get: if isAdmin() || isTeacher() || (isParent() && isLinkedParent(resource.data.studentId));
+      allow list: if isAdmin() || isTeacher() || (isParent() && isLinkedParent(resource.data.studentId));
+      allow create, update: if isTeacher() || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // 6. Fee Vouchers & Invoices (Confidential: Accountants, Admins, and Linked Parents)
+    match /fee_vouchers/{voucherId} {
+      allow get: if isAdmin() || isAccountant() || (isParent() && isLinkedParent(resource.data.studentId));
+      allow list: if isAdmin() || isAccountant() || (isParent() && isLinkedParent(resource.data.studentId));
+      allow create, update, delete: if isAccountant() || isAdmin();
+    }
+
+    // 7. Fee Payments (Transactions)
+    match /fee_payments/{paymentId} {
+      allow get: if isAdmin() || isAccountant() || (isParent() && isLinkedParent(resource.data.studentId));
+      allow list: if isAdmin() || isAccountant() || (isParent() && isLinkedParent(resource.data.studentId));
+      allow create: if isAccountant() || isAdmin();
+      allow update, delete: if isAdmin();
+    }
+
+    // 8. Examination Results
+    match /results/{resultId} {
+      allow get: if isAdmin() || isTeacher() || (isParent() && isLinkedParent(resource.data.studentId));
+      allow list: if isAdmin() || isTeacher() || (isParent() && isLinkedParent(resource.data.studentId));
+      allow create, update: if isTeacher() || isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // 9. Homework Assignments
+    match /homework/{hwId} {
+      allow get, list: if isSignedIn();
+      allow create, update, delete: if isTeacher() || isAdmin();
+    }
+
+    // 10. Announcements
+    match /announcements/{annId} {
+      allow get, list: if isSignedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // 11. Operational Expenses (Strictly Treasury)
+    match /expenses/{expenseId} {
+      allow get, list: if isAccountant() || isAdmin();
+      allow create, update, delete: if isAccountant() || isAdmin();
+    }
+
+    // 12. Faculty Salaries (Strictly Treasury)
+    match /salary_records/{salId} {
+      allow get, list: if isAccountant() || isAdmin();
+      allow create, update, delete: if isAccountant() || isAdmin();
+    }
+
+    // 13. Classes & Curriculum
+    match /classes/{classId} {
+      allow get, list: if isSignedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // 14. Timetables
+    match /timetables/{ttId} {
+      allow get, list: if isSignedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // 15. Library
+    match /library_books/{bookId} {
+      allow get, list: if isSignedIn();
+      allow create, update, delete: if isAdmin() || isTeacher();
+    }
+
+    // 16. Vehicles & Transport
+    match /vehicles/{vehicleId} {
+      allow get, list: if isSignedIn();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // 17. Inventory (Admin Only)
+    match /inventory/{invId} {
+      allow get, list: if isAdmin();
+      allow create, update, delete: if isAdmin();
+    }
+
+    // 18. Audit Logs (Admin Only)
+    match /audit_logs/{logId} {
+      allow get, list: if isAdmin();
+      allow create: if isSignedIn();
+      allow update, delete: if false; // Immutable audit trail
+    }
+
+    // 19. Academy Settings
+    match /settings/{settingId} {
+      allow get, list: if isSignedIn();
+      allow create, update, delete: if isAdmin();
+    }
+  }
+}
